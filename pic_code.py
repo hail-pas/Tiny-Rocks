@@ -1,11 +1,3 @@
-'''
--------------------------------------------------
-   File Name：     chekCode
-   Author :       phoenix
-   date：          2019/10/11
--------------------------------------------------
-'''
-
 import random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
