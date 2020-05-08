@@ -141,3 +141,5 @@ __pycache__
 ._*
 /.idea
 .idea
+/file
+.xlsx
