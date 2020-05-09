@@ -36,7 +36,7 @@
     <b>行业新闻</b>
 </h1>
 
-<div style="margin-left: 3%; margin-bottom: 40px; font-size: x-large"> <span style="color: green; font-size: x-large">标签分类</span>：
+<div style="margin-left: 3%; margin-bottom: 40px; font-size: x-large"><span style="color: green; font-size: x-large">标签分类</span>：
     <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '高分子')">高分子</a></span>
     <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '金属')">金属</a></span>
     <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '无机')">无机</a></span>
@@ -5789,15 +5789,11 @@
             var irow = filteredItem[i - 1];
             var irow2 = hrs[i - 1];
             if (i >= startRow && i <= endRow) {
-                if (irow && irow2) {
-                    irow.style.display = "block";
-                    irow2.style.display = "block";
-                }
+                irow.style.display = "block";
+                irow2.style.display = "block";
             } else {
-                if (irow && irow2) {
-                    irow.style.display = "none";
-                    irow2.style.display = "none";
-                }
+                irow.style.display = "none";
+                irow2.style.display = "none";
             }
         }
 
