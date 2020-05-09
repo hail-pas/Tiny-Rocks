@@ -37,11 +37,18 @@
 </h1>
 
 <div style="margin-left: 3%; margin-bottom: 40px; font-size: x-large"><span style="color: green; font-size: x-large">标签分类</span>：
-    <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '高分子')">高分子</a></span>
-    <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '金属')">金属</a></span>
-    <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '无机')">无机</a></span>
-    <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '综合')">综合</a></span>
-    <span style="border-width: 2px"><a href="#" onclick="goPage(1, 20, '前沿新材料')">前沿新材料</a></span>
+    <span class="tag" id="全部" style="border-width: 2px; padding: 3px 10px 3px 10px;"><a
+            href="#" onclick="goPageAll(1, 20, '全部')">全部</a></span>
+    <span class="tag" id="高分子" style="border-width: 2px; padding: 3px 10px 3px 10px; "><a href="#"
+                                                                                          onclick="goPage(1, 20, '高分子')">高分子</a></span>
+    <span class="tag" id="金属" style="border-width: 2px; padding: 3px 10px 3px 10px; "><a href="#"
+                                                                                         onclick="goPage(1, 20, '金属')">金属</a></span>
+    <span class="tag" id="无机" style="border-width: 2px; padding: 3px 10px 3px 10px; "><a href="#"
+                                                                                         onclick="goPage(1, 20, '无机')">无机</a></span>
+    <span class="tag" id="综合" style="border-width: 2px; padding: 3px 10px 3px 10px; "><a href="#"
+                                                                                         onclick="goPage(1, 20, '综合')">综合</a></span>
+    <span class="tag" id="前沿新材料" style="border-width: 2px; padding: 3px 10px 3px 10px; "><a href="#"
+                                                                                            onclick="goPage(1, 20, '前沿新材料')">前沿新材料</a></span>
 </div>
 <ul>
 
@@ -5748,30 +5755,34 @@
 <div id="barcon" name="barcon"></div>
 <script>
     function goPage(pno, psize, tagName) {
+
+        let aItem = document.getElementsByClassName("tag");
+        for (let index = 0; index < aItem.length; index++) {
+            if (aItem[index].id === tagName) {
+                aItem[index].style.backgroundColor = "cornflowerblue";
+            } else {
+                aItem[index].style.backgroundColor = "white";
+            }
+        }
+
         let items = document.getElementsByTagName("ul");
         let hrs = document.getElementsByTagName("hr");
         let itemss = items[0].getElementsByTagName("li");
-        let filteredItem = [];
-        let f_index = 1;
+        let filteredLiItem = [];
+        let filteredHrItem = []
+        let f_index = 0;
         for (let index = 0; index < itemss.length; index++) {
             itemss[index].style.display = 'none';
             hrs[index].style.display = 'none';
             let tagContent = itemss[index].getElementsByTagName("span")[1].textContent;
             if (tagContent.search(tagName) !== -1) {
-                console.log("bool:" + tagContent.search(tagName))
-                console.log("text:" + tagContent);
-                filteredItem[f_index] = itemss[index];
+                filteredLiItem[f_index] = itemss[index];
+                filteredHrItem[f_index] = hrs[index];
                 f_index += 1;
             }
         }
-
-        for (let i = 0; i < 5; i++) {
-            itemss[i].style.display = 'block';
-            hrs[i].style.display = 'block';
-        }
         var all_num = itemss.length;
-        var num = filteredItem.length;
-        console.log("num:" + num)
+        var num = filteredLiItem.length;
         var totalPage = 0;//总页数
         var pageSize = psize;//每页显示行数
         //总共分几页
@@ -5786,8 +5797,8 @@
         endRow = (endRow > num) ? num : endRow;  //40
         //遍历显示数据实现分页
         for (var i = 1; i < (num + 1); i++) {
-            var irow = filteredItem[i - 1];
-            var irow2 = hrs[i - 1];
+            var irow = filteredLiItem[i - 1];
+            var irow2 = filteredHrItem[i - 1];
             if (i >= startRow && i <= endRow) {
                 irow.style.display = "block";
                 irow2.style.display = "block";
@@ -5797,7 +5808,7 @@
             }
         }
 
-        var tempStr = "<div style=\"margin-left: 30%; margin-top: 20px; margin-bottom: 40px; font-size: x-large\">" + "总计 " + all_num + " 条； " + "当前标签下 " + num + " 条记录 分" + totalPage + "页 当前 第 " + currentPage + " 页";
+        var tempStr = "<div style=\"margin-left: 50%; margin-top: 20px; margin-right:-174px; margin-bottom: 40px; font-size: large\">" + "总计 " + all_num + " 条； " + "标签 " + "<span style=\"color: green; font-style: italic\" >" + tagName + "</span>" + " 下 " + num + " 条  分" + totalPage + "页 当前 第 " + currentPage + " 页";
         if (currentPage > 1) {
             tempStr += `<a href="#" onClick="goPage(1,${psize} ,'${tagName}')"> 首页 </a>`;
             tempStr += `<a href="#" onClick="goPage(${currentPage - 1},${psize} ,'${tagName}')"> <上一页 </a>`;
@@ -5816,7 +5827,71 @@
         document.getElementById("barcon").innerHTML = tempStr;
     }
 
-    goPage(1, 20, "高分子");
+    function goPageAll(pno, psize, tagName) {
+        let aItem = document.getElementsByClassName("tag");
+        for (let index = 0; index < aItem.length; index++) {
+            if (aItem[index].id === tagName) {
+                aItem[index].style.backgroundColor = "cornflowerblue";
+            } else {
+                aItem[index].style.backgroundColor = "white";
+            }
+        }
+
+
+        let items = document.getElementsByTagName("ul");
+        let hrs = document.getElementsByTagName("hr");
+        let itemss = items[0].getElementsByTagName("li");
+        for (let index = 0; index < itemss.length; index++) {
+            itemss[index].style.display = 'none';
+            hrs[index].style.display = 'none';
+        }
+        var all_num = itemss.length;
+        var num = itemss.length;
+        var totalPage = 0;//总页数
+        var pageSize = psize;//每页显示行数
+        //总共分几页
+        if (num / pageSize > parseInt(num / pageSize)) {
+            totalPage = parseInt(num / pageSize) + 1;
+        } else {
+            totalPage = parseInt(num / pageSize);
+        }
+        var currentPage = pno;//当前页数
+        var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行 31
+        var endRow = currentPage * pageSize;//结束显示的行  40
+        endRow = (endRow > num) ? num : endRow;  //40
+        //遍历显示数据实现分页
+        for (var i = 1; i < (num + 1); i++) {
+            var irow = itemss[i - 1];
+            var irow2 = hrs[i - 1];
+            if (i >= startRow && i <= endRow) {
+                irow.style.display = "block";
+                irow2.style.display = "block";
+            } else {
+                irow.style.display = "none";
+                irow2.style.display = "none";
+            }
+        }
+
+        var tempStr = "<div style=\"margin-left: 50%; margin-top: 20px; margin-right:-174px; margin-bottom: 40px; font-size: large\">" + "总计 " + all_num + " 条； 分" + totalPage + "页 当前 第 " + currentPage + " 页";
+        if (currentPage > 1) {
+            tempStr += `<a class="nava" href="#" onClick="goPageAll(1,${psize} ,'${tagName}')"> 首页 </a>`;
+            tempStr += `<a class="nava" href="#" onClick="goPageAll(${currentPage - 1},${psize} ,'${tagName}')"> <上一页 </a>`;
+        } else {
+            tempStr += " 首页 ";
+            tempStr += " <上一页 ";
+        }
+        if (currentPage < totalPage) {
+            tempStr += `<a class="nava" href="#" onClick="goPageAll(${currentPage + 1},${psize} ,'${tagName}')"> 下一页> </a>`;
+            tempStr += `<a class="nava" href="#" onClick="goPageAll(${totalPage},${psize} ,'${tagName}')"> 尾页 </a>`;
+        } else {
+            tempStr += " 下一页> ";
+            tempStr += " 尾页 ";
+        }
+        tempStr += "</div>";
+        document.getElementById("barcon").innerHTML = tempStr;
+    };
+
+    goPageAll(1, 20, "全部");
 </script>
 </body>
 </html>
